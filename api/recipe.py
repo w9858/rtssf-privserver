@@ -7,9 +7,10 @@ bp = Blueprint("recipe", __name__, url_prefix="/recipe")
 
 @bp.route("/create", methods=["POST"])
 def recipe_create():
-    return make_response('', 204)
     # pbrq = pb.RequestCreate()
     # pbrs = pb.ResponseCreate()
     # pbrq.ParseFromString(request.body)
     # pbrs.update_resource_result.MergeFrom(cm.update_resource_result())
     # return make_response(pbrs.SerializeToString())
+    return make_response('', 204)
+
