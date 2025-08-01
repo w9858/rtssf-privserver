@@ -30,4 +30,4 @@ def serve_images(filename):
     return send_from_directory('./img/images', filename)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=21219, debug=True)
+    app.run(host="127.0.0.1", port=19212, debug=False)

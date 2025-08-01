@@ -19,3 +19,4 @@
 - Stamina, and Item will not consume
 - AES-256-CBC Encryption-Decryption (by original app)
   - Only works on modified app
+- etc...
