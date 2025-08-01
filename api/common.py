@@ -124,7 +124,7 @@ def deck_save(newdata):
 #quest
 
 def quest_clear(num, m1, m2, m3):
-    print(num, m1, m2, m3)
+    # print(num, m1, m2, m3)
     with open("./data/t_user_quest_list.json", mode="r", encoding="utf-8") as f:
         data = json.load(f)
     quest_ids = [q['quest_id'] for q in data['t_user_quest_list']]
