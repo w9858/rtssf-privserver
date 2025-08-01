@@ -13,7 +13,7 @@
 
 - Support iOS devices
 - Crafting weapons, items (weapon recipe are not available)
-- Spy expedition (any action will be ignored)
+- Spy expedition
 - Shop & Exchange
 - Achievement & Receive Present (Blank)
 - Stamina, and Item will not consume
