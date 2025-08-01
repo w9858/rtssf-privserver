@@ -94,16 +94,16 @@ def friend_top():
 
 @bp.route("/delete", methods=["POST"])
 def friend_delete():
-    return make_response(None, 204)
+    return make_response('', 204)
 
 @bp.route("/invite", methods=["POST"])
 def friend_invite():
-    return make_response(None, 204)
+    return make_response('', 204)
 
 @bp.route("/ng_invite", methods=["POST"])
 def friend_ng_invite():
-    return make_response(None, 204)
+    return make_response('', 204)
 
 @bp.route("/ok_invite", methods=["POST"])
 def friend_ok_invite():
-    return make_response(None, 204)
+    return make_response('', 204)
