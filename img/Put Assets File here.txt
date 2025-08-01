@@ -1,0 +1,5 @@
+img/assets/Android
+img/assets/iOS
+img/assets/OtherAssets
+img/images
+img/sqlites
