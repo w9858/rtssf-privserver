@@ -5,7 +5,10 @@ echo " > : 권한 요청시 허용을 눌러주세요"
 echo " > : 権限要求が表示されたら許可を押してください"
 
 termux-setup-storage
+sleep 30s
+
 termux-wake-lock
+sleep 10s
 
 cd ~
 
