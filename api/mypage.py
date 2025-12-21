@@ -2,11 +2,27 @@ from flask import Blueprint, request, make_response
 from proto import mypage_pb2 as pb
 from google.protobuf import json_format as jf
 from api import common as cm
+from datetime import datetime
 
 bp = Blueprint("mypage", __name__, url_prefix="/mypage")
 
+had_loginbonus = False
+
+birthday = {
+    (6, 29): [11001],(12, 14): [11002],
+    (11, 22): [11003, 11004],
+    (4, 2):  [11005], (8, 24): [11006],
+    (9, 1):  [11007, 11008],
+    (12, 21): [11009], (5, 28): [11010],
+    (7, 26): [12001], (10, 6): [12002],
+    (7, 14): [12003], (8, 10): [12004],
+    (2, 23): [13001] #, (4, 22): [13002]
+}
+
+
 @bp.route("/index", methods=["POST"])
 def mypage_index():
+    global had_loginbonus
     pbrs = pb.ResponseIndex()
     jf.Parse(cm.read("t_user"), pbrs)
     jf.Parse(cm.read("t_user_tips_list"), pbrs)
@@ -28,6 +44,23 @@ def mypage_index():
     pbrs.m_app_banner_list[2].order = 0
     pbrs.m_app_banner_list[2].start_at = "2019-01-03 20:02:44"
     pbrs.m_app_banner_list[2].end_at = "2033-05-03 20:02:44"
+
+    if not had_loginbonus:
+        had_loginbonus = True
+        today = datetime.now()
+        key = (today.month, today.day)
+
+        daily = pbrs.t_user_login_bonus_list.add()
+        daily.login_bonus_id = 10000001
+        # daily.sheet_id = 1
+        daily.day = (today.weekday() + 1) % 7
+
+        if key in birthday:
+            ids = birthday[key]
+            for person_id in ids:
+                birthday_bonus = pbrs.t_user_login_bonus_list.add()
+                birthday_bonus.login_bonus_id = person_id * 100 + 40000001
+                birthday_bonus.day = 0
 
     #pbrs.t_user_login_bonus_list.add()
     #pbrs.t_user_login_bonus_list[-1].login_bonus_id = 41300201

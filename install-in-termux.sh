@@ -3,6 +3,7 @@
 echo " > : Please allow permissions when prompted"
 echo " > : 권한 요청시 허용을 눌러주세요"
 echo " > : 権限要求が表示されたら許可を押してください"
+sleep 5s
 
 termux-setup-storage
 sleep 30s
