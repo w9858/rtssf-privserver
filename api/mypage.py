@@ -7,6 +7,7 @@ from datetime import datetime
 bp = Blueprint("mypage", __name__, url_prefix="/mypage")
 
 had_loginbonus = False
+last_date = None
 
 birthday = {
     (6, 29): [11001],(12, 14): [11002],
@@ -23,7 +24,12 @@ birthday = {
 @bp.route("/index", methods=["POST"])
 def mypage_index():
     global had_loginbonus
+    global last_date
     today = datetime.now()
+
+    if last_date != today.date():
+        had_loginbonus = False
+        last_date = today.date()
 
     pbrs = pb.ResponseIndex()
     jf.Parse(cm.read("t_user"), pbrs)
@@ -36,21 +42,21 @@ def mypage_index():
     pbrs.m_app_banner_list[0].order = 0
     pbrs.m_app_banner_list[0].start_at = "2019-01-03 20:02:44"
     pbrs.m_app_banner_list[0].end_at = "2038-01-01 23:59:59"
-    pbrs.m_app_banner_list[0].transition_id = 14
+    pbrs.m_app_banner_list[0].transition_id = 8
     
     pbrs.m_app_banner_list.add()
     pbrs.m_app_banner_list[1].banner_img = "Banner/2.png"
     pbrs.m_app_banner_list[1].order = 0
     pbrs.m_app_banner_list[1].start_at = "2019-01-03 20:02:44"
     pbrs.m_app_banner_list[1].end_at = "2038-01-01 23:59:59"
-    pbrs.m_app_banner_list[1].transition_id = 13
+    pbrs.m_app_banner_list[1].transition_id = 10
 
     pbrs.m_app_banner_list.add()
     pbrs.m_app_banner_list[2].banner_img = "Banner/3.png"
     pbrs.m_app_banner_list[2].order = 0
     pbrs.m_app_banner_list[2].start_at = "2019-01-03 20:02:44"
     pbrs.m_app_banner_list[2].end_at = "2038-01-01 23:59:59"
-    pbrs.m_app_banner_list[2].transition_id = 3
+    pbrs.m_app_banner_list[2].transition_id = 13
 
     if not had_loginbonus:
         had_loginbonus = True
