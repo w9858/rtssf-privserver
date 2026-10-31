@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Board;
+
+message RequestBoardRelease {
+    int32 unit_id = 1;
+    int32 sheet_no = 2;
+    int32 box_id = 3;
+}
+
+message RequestRelease {
+    int32 unit_id = 1;
+    int32 square_id = 2;
+    int32 box_id = 3;
+    int32 sheet_no = 4;
+}
+
+message ResponseBoardRelease {
+    Common.TUserBoard t_user_board = 1;
+    repeated Common.TUserItem t_user_item_list = 2;
+    Common.TUser t_user = 3;
+    repeated Common.TUserArchive t_user_archive_list = 4;
+}
+
+message ResponseRelease{
+    Common.TUserBoard t_user_board = 1;
+    repeated Common.TUserItem t_user_item_list = 2;
+    Common.TUser t_user = 3;
+    repeated Common.TUserArchive t_user_archive_list = 4;
+}

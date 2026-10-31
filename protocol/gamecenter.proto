@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Gamecenter;
+
+message RequestGetList {
+    
+}
+
+message ResponseGetList {
+    repeated int32 gamecenter_id_list_all = 1;
+}

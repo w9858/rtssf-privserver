@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Archive;
+
+message RequestRead {
+    int32 quest_id = 1;
+}
+
+message RequestRelease {
+    int32 quest_id = 1;
+}
+
+message ResponseRead {
+    repeated Common.TUserArchive t_user_archive_list = 1;
+}
+
+message ResponseRelease {
+    repeated Common.TUserArchive t_user_archive_list = 1;
+    Common.UpdateResourceResult update_resource_result = 2;
+}

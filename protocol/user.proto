@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.User;
+
+message RequestChangeComment {
+    string comment = 1;
+}
+
+message RequestChangeEmblem {
+    int32 emblem_id = 1;
+}
+
+message RequestChangeFriendUnit {
+    int32 unit_id = 1;
+}
+
+message RequestChangeHomeBg {
+    int32 background_id = 1;
+}
+
+message RequestChangeHomeUnitMain {
+    int32 unit_id = 1;
+}
+
+message RequestChangeHomeUnitSub {
+    int32 unit_id = 1;
+}
+
+message RequestChangeName {
+    string name = 1;
+}
+
+message RequestGetStaminaRecover {
+    
+}
+
+message RequestSetRelationPassword {
+    string password = 1;
+}
+
+message RequestSetTransferPassword {
+    string password = 1;
+}
+
+message RequestStaminaRecover {
+    
+}
+
+message ResponseChangeComment {
+    Common.TUser t_user = 1;
+}
+
+message ResponseChangeEmblem {
+    Common.TUser t_user = 1;
+}
+
+message ResponseChangeFriendUnit {
+    Common.TUser t_user = 1;
+}
+
+message ResponseChangeHomeBg {
+    Common.TUser t_user = 1;
+}
+
+message ResponseChangeHomeUnitMain {
+    Common.TUser t_user = 1;
+}
+
+message ResponseChangeHomeUnitSub {
+    Common.TUser t_user = 1;
+}
+
+message ResponseChangeName {
+    Common.TUser t_user = 1;
+}
+
+message ResponseGetStaminaRecover {
+    int32 count = 1;
+    int32 need_crystal_current = 2;
+    int32 need_crystal = 3;
+}
+
+message ResponseSetRelationPassword {
+    
+}
+
+message ResponseSetTransferPassword {
+    
+}
+
+message ResponseStaminaRecover {
+    Common.TUserWorker t_user_worker = 1;
+    Common.TUserCrystal t_user_crystal = 2;
+}

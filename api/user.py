@@ -76,8 +76,9 @@ def user_stamina_recover():
 
 @bp.route("/get_stamina_recover", methods=["POST"])
 def user_get_stamina_recover():
-    return make_response('', 204)
+    return make_response(pb.ResponseGetStaminaRecover().SerializeToString())
 
 @bp.route("/set_transfer_password", methods=["POST"])
 def user_set_transfer_password():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')

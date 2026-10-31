@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Tips;
+
+message RequestSave {
+    repeated int32 tips_id_list = 1;
+}
+
+message ResponseSave {
+    repeated Common.TUserTips t_user_tips_list = 1;
+}

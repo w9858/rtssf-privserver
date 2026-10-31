@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.MyPage;
+
+message RequestIndex {
+    repeated int32 tips_id_list = 1;
+}
+
+message ResponseIndex {
+    message TUserLoginBonus {
+        int32 login_bonus_id = 1;
+        int32 sheet_id = 2;
+        int32 day = 3;
+    }
+    message MAppBanner {
+        string banner_img = 1;
+        int32 order = 2;
+        int32 transition_id = 3;
+        // none = 0, spy_mission = 1, character_list = 2, gacha = 3, weapon_create = 4, item_create = 5
+        // expedition = 8, day_of_week_top = 10, shop = 11, purchase_shop = 12, info = 13, event_top = 14
+        int32 transition_value = 4; // ex: info detail number, gacha detail number
+        string start_at = 5;
+        string end_at = 6;
+        int32 end_of_tutorial_from = 7;
+    }
+    message MAd {
+        int32 ad_type = 1;
+        int32 target_id = 2;
+        int32 fade_pattern = 3;
+        int32 particle_pattern = 4;
+    }
+    message TUserBan {
+        int32 id = 1;
+        string notice_message = 2;
+        string start_at = 3;
+        string end_at = 4;
+    }
+
+    repeated TUserLoginBonus t_user_login_bonus_list = 1;
+    Common.TUser t_user = 7;
+    repeated Common.TUserCount t_user_count_list = 8;
+    int32 exists_new_clear_achievement = 9;
+    int32 present_count = 10;
+    int32 shop_new_item_flag = 11;
+    Common.TUserCrystal t_user_crystal = 12;
+    repeated MAppBanner m_app_banner_list = 13;
+    repeated MAd m_ad_list = 14;
+    int32 exists_friend_invited = 15;
+    repeated Common.TUserTips t_user_tips_list = 16;
+    int32 no_read_information_count = 17;
+    TUserBan t_user_ban = 18;
+    repeated int32 gamecenter_id_list = 19;
+}

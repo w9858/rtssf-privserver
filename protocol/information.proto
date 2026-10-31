@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Information;
+
+message RequestIndex {
+    int32 from_information_id = 1;
+    string updated_at = 2;
+}
+
+message RequestRead {
+    int32 information_id = 1;
+}
+
+message ResponseIndex {
+    message MInformation {
+        int32 information_id = 1;
+        int32 tab_id = 2;
+        string title = 3;
+        string title_image = 4;
+        string contents = 5;
+        int32 view_ios = 6;
+        int32 view_android = 7;
+        int32 view_dmm = 8;
+        int32 order = 9;
+        string start_at = 10;
+        string end_at = 11;
+        string updated_at = 12;
+        string disp_updated_at = 13;
+        int32 pin_flag = 14;
+    }
+    message MInformationTab {
+        int32 tab_id  = 1;
+        string name = 2;
+        int32 order = 3;
+    }
+    message TUserInformation {
+        int32 information_id = 1;
+    }
+
+    repeated MInformationTab m_information_tab_list = 1;
+    repeated MInformation m_information_list = 2;
+    repeated TUserInformation t_user_information_list = 3;
+}
+
+message ResponseRead {
+    
+}

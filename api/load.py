@@ -40,6 +40,9 @@ def load_split():
         "t_user_board_list",
     ]
 
+    if not 0 <= pbrq.section <= len(parse_functions):
+        from werkzeug.exceptions import BadRequest
+        raise BadRequest('Load section out of range')
     pbrs.current_section = pbrq.section
     pbrs.max_section = len(parse_functions)
 
@@ -47,7 +50,7 @@ def load_split():
         table_name = parse_functions[pbrq.section - 1]
         # print(f"Section {pbrq.section} / {pbrs.max_section} - {table_name}")
         jf.Parse(cm.read(table_name), pbrs)
-    
+
     return make_response(pbrs.SerializeToString())
 
 @bp.route("/sqlite_versions", methods=["POST"])

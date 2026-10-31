@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Achievement;
+
+message RequestGetList {
+    string last_updated_at = 1;
+}
+
+message RequestReceive {
+    int32 achievement_id = 1;
+}
+
+message RequestReceiveAll {
+    repeated int32 achievement_id_list = 1;
+}
+
+message ResponseGetList {
+    message UserConditionCount {
+        int32 condition_id = 1;
+        int32 condition_detail_id = 2;
+        int32 count = 3;
+    }
+    
+    repeated Common.TUserAchievement t_user_achievement_list = 1;
+    repeated Common.TUserAchievementDaily t_user_achievement_daily_list = 2;
+    repeated Common.TUserAchievementWeekly t_user_achievement_weekly_list = 3;
+    repeated UserConditionCount user_condition_count_list = 4;
+}
+
+message ResponseReceive {
+    repeated Common.TUserAchievement t_user_achievement_list = 1;
+    repeated Common.TUserAchievementDaily t_user_achievement_daily_list = 2;
+    repeated Common.TUserAchievementWeekly t_user_achievement_weekly_list = 3;
+    Common.TUserGachaStepup t_user_gacha_stepup = 10;
+    Common.TUserGachaNormal t_user_gacha_normal = 11;
+    Common.UpdateResourceResult update_resource_result = 14;
+}
+
+message ResponseReceiveAll {
+    repeated Common.TUserAchievement t_user_achievement_list = 1;
+    repeated Common.TUserAchievementDaily t_user_achievement_daily_list = 2;
+    repeated Common.TUserAchievementWeekly t_user_achievement_weekly_list = 3;
+    Common.TUserGachaStepup t_user_gacha_stepup = 10;
+    Common.TUserGachaNormal t_user_gacha_normal = 11;
+    Common.UpdateResourceResult update_resource_result = 14;
+}

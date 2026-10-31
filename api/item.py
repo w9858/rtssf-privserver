@@ -7,7 +7,8 @@ bp = Blueprint("item", __name__, url_prefix="/item")
 
 @bp.route("/sell", methods=["POST"])
 def item_sell():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')
 
 @bp.route("/stamina_recover", methods=["POST"])
 def item_stamina_recover():

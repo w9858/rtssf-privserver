@@ -28,21 +28,21 @@ def shop_list():
     pbrs.shop_list[-1].balloon_msg = "Main"
     pbrs.shop_list[-1].point_resource_type = 6
     pbrs.shop_list[-1].button_type = 0
-    
+
     pbrs.shop_list.add()
     pbrs.shop_list[-1].shop_id = random.choice(ssr_chara)
     pbrs.shop_list[-1].name = "コイン"
     pbrs.shop_list[-1].balloon_msg = str(pbrs.shop_list[-1].shop_id)
     pbrs.shop_list[-1].point_resource_type = 4
     pbrs.shop_list[-1].button_type = 1
-    
+
     pbrs.shop_list.add()
     pbrs.shop_list[-1].shop_id = random.choice(ssr_chara)
     pbrs.shop_list[-1].name = "フレンドポイント"
     pbrs.shop_list[-1].balloon_msg = str(pbrs.shop_list[-1].shop_id)
     pbrs.shop_list[-1].point_resource_type = 9
     pbrs.shop_list[-1].button_type = 2
-    
+
     pbrs.shop_list.add()
     pbrs.shop_list[-1].shop_id = random.choice(ssr_chara)
     pbrs.shop_list[-1].name = "ブーツ"

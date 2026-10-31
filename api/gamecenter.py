@@ -7,4 +7,4 @@ bp = Blueprint("gamecenter", __name__, url_prefix="/gamecenter")
 
 @bp.route("/get_list", methods=["POST"])
 def gamecenter_get_list():
-    return make_response('', 204)
+    return make_response(pb.ResponseGetList().SerializeToString())

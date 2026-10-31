@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Spy;
+
+message RequestClear {
+    int32 user_spy_id = 1;
+}
+
+message RequestForceClear {
+    int32 user_spy_id = 1;
+}
+
+message RequestGetList {
+    
+}
+
+message RequestStart {
+    int32 user_spy_id = 1;
+    int32 unit_id = 2;
+    int32 sub_unit_id = 3;
+}
+
+message RequestStop {
+    int32 user_spy_id = 1;
+}
+
+message ResponseClear {
+    message SpyReward {
+        int32 spy_id = 1;
+        int32 resource_type = 2;
+        int32 resource_id = 3;
+        int32 resource_value_id = 4;
+        int32 amount = 5;
+    }
+    message TodayWork {
+        int32 max_count = 1;
+        int32 current_count = 2;
+    }
+
+    repeated Common.TUserSpy t_user_spy_list = 1;
+    repeated Common.TUserSpyPlaying t_user_spy_playing_list = 2;
+    repeated SpyReward spy_reward_list = 10;
+    bool is_great_success = 11;
+    TodayWork today_work = 13;
+    Common.UpdateResourceResult update_resource_result = 14;
+}
+
+message ResponseForceClear {
+    message SpyReward {
+        int32 spy_id = 1;
+        int32 resource_type = 2;
+        int32 resource_id = 3;
+        int32 resource_value_id = 4;
+        int32 amount = 5;   
+    }
+
+    repeated Common.TUserSpy t_user_spy_list = 1;
+    repeated Common.TUserSpyPlaying t_user_spy_playing_list = 2;
+    int32 force_clear_need_spy_stone = 10;
+    repeated SpyReward spy_reward_list = 11;
+    bool is_great_success = 12;
+    Common.TUserCrystal t_user_crystal = 13;
+}
+
+message ResponseGetList {
+    message TodayWork {
+        int32 max_count = 1;
+        int32 current_count = 2;
+    }
+
+    repeated Common.TUserSpy t_user_spy_list = 1;
+    repeated Common.TUserSpyPlaying t_user_spy_playing_list = 2;
+    TodayWork today_work = 3;
+}
+
+message ResponseStart {
+    repeated Common.TUserSpy t_user_spy_list = 1;
+    repeated Common.TUserSpyPlaying t_user_spy_playing_list = 2;
+}
+
+message ResponseStop {
+    message TodayWork {
+        int32 max_count = 1;
+        int32 current_count = 2;
+    }
+
+    repeated Common.TUserSpy t_user_spy_list = 1;
+    repeated Common.TUserSpyPlaying t_user_spy_playing_list = 2;
+    TodayWork today_work = 3;
+}

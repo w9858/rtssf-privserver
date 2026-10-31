@@ -65,4 +65,9 @@ def information_index():
 
 @bp.route("/read", methods=["POST"])
 def information_read():
-    return make_response('', 204)
+    query = pb.RequestRead.FromString(request.data)
+    if query.information_id not in (1, 2):
+        from werkzeug.exceptions import BadRequest
+        raise BadRequest('Unknown information ID')
+    cm.save('read_information_' + str(query.information_id), {'read': True})
+    return make_response(pb.ResponseRead().SerializeToString())

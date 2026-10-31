@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Friend;
+
+message RequestCancelInvite {
+    int32 target_user_id = 1;
+}
+
+message RequestDelete {
+    int32 target_user_id = 1;
+}
+
+message RequestGetList {
+    int32 list_type = 1;
+    repeated int32 exclude_user_id_list = 2;
+}
+
+message RequestInvite {
+    int32 target_user_id = 1;
+}
+
+message RequestNgInvite {
+    int32 target_user_id = 1;
+}
+
+message RequestOkInvite {
+    int32 target_user_id = 1;
+}
+
+message RequestSearch {
+    int32 user_id = 1;
+    int32 view_user_id = 2;    
+}
+
+message RequestTop {
+    
+}
+
+message ResponseCancelInvite {
+    
+}
+
+message ResponseDelete {
+    
+}
+
+message ResponseGetList {
+    repeated Common.UserProfile user_profile_list = 2;
+}
+
+message ResponseInvite {
+    
+}
+
+message ResponseNgInvite {
+    
+}
+
+message ResponseOkInvite {
+    
+}
+
+message ResponseSearch {
+    Common.UserProfile user_profile = 1;
+}
+
+message ResponseTop {
+    repeated Common.UserProfile t_user_friend_list = 1;
+    repeated Common.UserProfile t_user_friend_invite_list = 2;
+    repeated Common.UserProfile t_user_friend_invited_list = 3;
+}

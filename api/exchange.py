@@ -50,7 +50,7 @@ def exchange_list():
     pbrs.m_exchange_list[-1].name = "exchange4"
     pbrs.m_exchange_list[-1].balloon_msg = str(pbrs.m_exchange_list[-1].exchange_id)
     pbrs.m_exchange_list[-1].button_type = 3
-    
+
     return make_response(pbrs.SerializeToString())
 
 @bp.route("/item_list", methods=["POST"])

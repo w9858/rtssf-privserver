@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Regist;
+
+message RequestCheck {
+    
+}
+
+message RequestDmm {
+    
+}
+
+message RequestRelation {
+    string acount_relation_id = 1;
+    string password = 2;
+}
+
+message RequestSmartphone {
+    // [REMOVED] string name = 1;
+}
+
+message RequestTransfer {
+    string acount_relation_id = 1;
+    string password = 2;
+}
+
+message ResponseCheck {
+    bool is_register = 1;
+    bool is_review = 2;
+    int32 master_check_user = 3;
+    int32 sqlite_ver = 4;
+}
+
+message ResponseDmm {
+    
+}
+
+message ResponseRelation {
+    
+}
+
+message ResponseSmartphone {
+    
+}
+
+message ResponseTransfer {
+    
+}
