@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Help;
+
+message RequestList {
+    
+}
+
+message ResponseList {
+    message MHelp {
+        int32 id = 1;
+        int32 category = 2;
+        int32 order = 3;
+        string title = 4;
+        string contents = 5;
+    }
+    message MHelpCategory {
+        int32 category = 1;
+        int32 order = 2;
+        string name = 3;
+    }
+
+    repeated MHelp m_help_list = 1;
+    repeated MHelpCategory m_help_category_list = 2;
+}

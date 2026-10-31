@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Item;
+
+message RequestSell {
+    message SellItem {
+        int32 item_id = 1;
+        int32 amount = 2;
+    }
+
+    repeated SellItem sell_item_list = 1;
+}
+
+message RequestStaminaRecover {
+    int32 item_id = 1;
+    int32 use_num = 2;
+}
+
+message ResponseSell {
+    repeated Common.TUserItem t_user_item_list = 1;
+    Common.TUser t_user = 2;
+}
+
+message ResponseStaminaRecover {
+    repeated Common.TUserItem t_user_item_list = 1;
+    Common.TUserWorker t_user_worker = 2;
+}

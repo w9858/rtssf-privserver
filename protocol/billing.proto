@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Billing;
+
+message RequestCancelAndroid {
+    int32 id = 1;
+}
+
+message RequestCancelIos {
+    int32 id = 1;
+}
+
+message RequestChargeAndroid {
+    int32 id = 1;
+    string product_id = 2;
+    string signed_data = 3;
+    string signature = 4;
+    int32 retry_flag = 5;
+}
+
+message RequestChargeIos {
+    int32 id = 1;
+    string receipt = 2;
+    string product_id = 3;
+    int32 retry_flag = 4;
+    int64 transaction_id = 5;
+}
+
+message RequestConfirmAndroid {
+    string pricing_code = 1;
+}
+
+message RequestConfirmIos {
+    string pricing_code = 1;
+}
+
+message RequestRegistBirthday {
+    int32 birthday = 1;
+}
+
+message RequestTop {
+    
+}
+
+message ResponseCancelAndroid {
+    int32 id = 1;
+}
+
+message ResponseCancelIos {
+    int32 id = 1;
+}
+
+message ResponseChargeAndroid {
+    Common.TUserCrystal t_user_crystal = 1;
+    int32 id = 2;
+    repeated Common.TUserSubscription t_user_subscription_list = 3;
+}
+
+message ResponseChargeIos {
+    Common.TUserCrystal t_user_crystal = 1;
+    int32 id = 2;
+    repeated Common.TUserSubscription t_user_subscription_list = 3;
+}
+
+message ResponseConfirmAndroid {
+    int32 id = 1;
+}
+
+message ResponseConfirmIos {
+    int32 id = 1;
+}
+
+message ResponseRegistBirthday {
+    
+}
+
+message ResponseTop {
+    message Item {
+        int32 item_index = 1;
+        string name = 2;
+        string pricing_code = 3;
+        int32 stock_count = 4; // inf -1
+        int32 label_type = 6;
+        string icon = 7;
+        int32 price = 8;
+        int32 paid_amount = 9;
+        int32 free_amount = 10;
+        repeated Omake omake_list = 13;
+        string description = 14;
+        string product_id = 15;
+        int32 subscription_id = 16; // 0 meant its not subscribe item
+        int32 purchasable_time = 17; // how long time will be (re)purchasable (sec)
+        string start_at = 18;
+        string end_at = 19;
+    }
+    message Omake {
+        int32 item_index = 1;
+        int32 resource_type = 2;
+        int32 resource_id = 3;
+        int32 resource_value_id = 4;
+        int32 amount = 5;
+    }
+    
+    repeated Item item_list = 1;
+    int32 registered_birthday = 2; // 1 meant registered, 2 meant not
+}

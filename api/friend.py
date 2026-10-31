@@ -21,13 +21,11 @@ def rand_chara():
                  396004001, 396005001]
     return random.sample(ssr_chara, k=len(ssr_chara))
 
-var_rand_chara = rand_chara()
+var_rand_chara = sorted(rand_chara())
 
 @bp.route("/get_list", methods=["POST"])
 def friend_get_list():
     pbrs = pb.ResponseGetList()
-    global var_rand_chara
-    var_rand_chara = rand_chara()
     for i in range(50):
         pbrs.user_profile_list.add()
         pbrs.user_profile_list[i].user_id = i+1
@@ -49,11 +47,13 @@ def friend_get_list():
 def friend_search():
     pbrq = pb.RequestSearch()
     pbrs = pb.ResponseSearch()
-    global var_rand_chara
     pbrq.ParseFromString(request.data)
-    rand_id = random.randrange(1000000,9999999)
+    if pbrq.view_user_id <= 0:
+        from werkzeug.exceptions import BadRequest
+        raise BadRequest('Friend ID must be positive')
+    rand_id = pbrq.view_user_id
 
-    pbrq.view_user_id = pbrq.view_user_id % 90
+    unit_index = (pbrq.view_user_id - 1) % len(var_rand_chara)
 
     pbrs.user_profile.user_id = rand_id
     pbrs.user_profile.view_user_id = rand_id
@@ -62,8 +62,8 @@ def friend_search():
     pbrs.user_profile.last_login = "2099-12-31 00:00:00"
     pbrs.user_profile.name = "FRIEND"
     pbrs.user_profile.comment = "こんにちは"
-    pbrs.user_profile.friend_unit_id = var_rand_chara[pbrq.view_user_id-1]
-    pbrs.user_profile.home_unit_id_1 = var_rand_chara[pbrq.view_user_id-1]
+    pbrs.user_profile.friend_unit_id = var_rand_chara[unit_index]
+    pbrs.user_profile.home_unit_id_1 = var_rand_chara[unit_index]
     pbrs.user_profile.friend_unit_rarity = 5
     pbrs.user_profile.home_background_id = 110401058
     pbrs.user_profile.is_friend = True
@@ -73,7 +73,6 @@ def friend_search():
 @bp.route("/top", methods=["POST"])
 def friend_top():
     pbrs = pb.ResponseTop()
-    global var_rand_chara
     for i in range(50):
         pbrs.t_user_friend_list.add()
         pbrs.t_user_friend_list[i].user_id = i+1
@@ -94,16 +93,20 @@ def friend_top():
 
 @bp.route("/delete", methods=["POST"])
 def friend_delete():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')
 
 @bp.route("/invite", methods=["POST"])
 def friend_invite():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')
 
 @bp.route("/ng_invite", methods=["POST"])
 def friend_ng_invite():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')
 
 @bp.route("/ok_invite", methods=["POST"])
 def friend_ok_invite():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')

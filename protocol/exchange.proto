@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Exchange;
+
+message RequestBuy {
+    int32 exchange_id = 1;
+    int32 item_index = 2;
+    int32 count = 3;
+    bool is_exchange_crystal = 4;
+}
+
+message RequestItemList {
+    int32 exchange_id = 1;
+}
+
+message RequestList {
+    
+}
+
+message ResponseBuy {
+    Common.UpdateResourceResult update_resource_result = 2;
+}
+
+message ResponseItemList {
+    message Item {
+        int32 item_index = 1;
+        string name = 2;
+        string description = 3;
+        int32 need_point = 4;
+        int32 stock_count = 5;
+        int32 current_stock_count = 6;
+        int32 label_type = 7;
+        int32 icon_resource_type = 8;
+        int32 icon_resource_id = 9;
+        repeated PackResource pack_resource_list = 12;
+        string start_at = 13;
+        string end_at = 14;
+    }
+    message PackResource {
+        int32 pack_id = 1;
+        int32 resource_type = 2;
+        int32 resource_id = 3;
+        int32 resource_value_id = 4;
+        int32 amount = 5;
+    }
+
+    repeated Item item_list = 1;
+    int32 point = 2;
+    int32 exchange_unit_id = 3;
+}
+
+message ResponseList {
+    message MExchange {
+        int32 exchange_id = 1;
+        string name = 2;
+        int32 new_item_flag = 3;
+        int32 button_type = 4;
+        string balloon_msg = 5;
+        string start_at = 6;
+        string end_at = 7;
+    }
+    
+    repeated MExchange m_exchange_list = 1;
+}

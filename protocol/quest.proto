@@ -1,0 +1,211 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Quest;
+
+message RequestClear {
+    message QuestItem {
+        int32 item_id = 1;
+        int32 amount = 2;
+    }
+    message Wave {
+        int32 wave_id = 1;
+        int32 is_success = 2;
+    }
+
+    int32 quest_id = 1;
+    string token = 2;
+    int32 deck_no = 3;
+    repeated Wave wave_list = 4;
+    repeated QuestItem quest_item_list = 5;
+    int32 event_id = 6;
+    bool is_clear_mission_1 = 7;
+    bool is_clear_mission_2 = 8;
+    bool is_clear_mission_3 = 9;
+    int32 active_skill_count = 10;
+    // [REMOVED] int32 spyce_action_count = 11;
+    int32 spyce_burst_count = 12;
+    int32 score = 13;
+}
+
+message RequestClearAdv {
+    int32 quest_id = 1;
+    string token = 2;
+    int32 event_id = 3;
+}
+
+message RequestContinue {
+    int32 quest_id = 1;
+    string token =2 ;
+}
+
+message RequestFail {
+    message QuestItem {
+        int32 item_id = 1;
+        int32 amount = 2;
+    }
+    message Wave {
+        int32 wave_id = 1;
+        int32 is_success = 2;
+    }
+
+    int32 quest_id = 1;
+    int32 deck_no = 2;
+    string token = 3;
+    int32 event_id = 4;
+    repeated Wave wave_list = 5;
+    /*
+    !dead field!
+    repeated ExcludeEnemy exclude_enemy_list = 6;
+    int32 active_skill_count = 7;
+    int32 spyce_action_count = 8;
+    int32 spyce_burst_count = 9;
+    */
+    repeated QuestItem quest_item_list = 10;
+}
+
+
+
+message RequestGetBookList {
+    int32 quest_id = 1;
+}
+
+message RequestGetContinueCrystal {
+    int32 quest_id = 1;
+    string token = 2;
+}
+
+message RequestGetUserList {
+    int32 quest_category = 1;
+}
+
+message RequestRetire {
+    message QuestItem {
+        int32 item_id = 1;
+        int32 amount = 2;
+    }
+    int32 quest_id =1;
+    repeated QuestItem quest_item_list = 2;
+}
+
+message RequestReturn {
+    int32 quest_id = 1;
+    string token = 2; 
+}
+
+message RequestStart {
+    message QuestItem {
+        int32 item_id = 1;
+        int32 amount = 2;
+    }
+    int32 quest_id = 1;
+    int32 deck_no = 2;
+    int32 friend_user_id = 3;
+    repeated QuestItem quest_item_list = 4;
+    int32 event_id = 5;
+    repeated int32 item_id_list = 6;
+    int32 friend_unit_id = 7;
+}
+
+message RequestStartAdv {
+    int32 quest_id = 1;
+    int32 event_id = 2;
+}
+
+message ResponseClear {
+    repeated Common.Resource drop_list = 2;
+    repeated Common.Resource mission_complete_reward_list = 3;
+    Common.TUserQuest t_user_quest = 5;
+    Common.TUserQuestStatus t_user_quest_status = 6;
+    repeated Common.TUserCharacterFriendly t_user_character_friendly_list = 7;
+    bool is_unlock_spy_frame = 8;
+    Common.UpdateResourceResult update_resource_result = 9;
+    int32 friend_point = 10;
+    bool is_friend = 11;
+    bool is_invited = 12;
+    bool is_invete = 13;
+    repeated Common.TUserArchive t_user_archive_list = 14;
+}
+
+message ResponseClearAdv {
+    Common.TUserQuest t_user_quest = 1;
+    Common.TUserQuestStatus t_user_quest_status = 2;
+    Common.TUser t_user = 3;
+    Common.TUserWorker t_user_worker = 4;
+    repeated Common.TUserArchive t_user_archive_list = 5;
+}
+
+message ResponseContinue {
+    Common.UpdateResourceResult update_resource_result = 1;
+}
+
+message ResponseFail {
+    // [REMOVED] repeated Common.TUserCount t_user_count_list = 1;
+    Common.UpdateResourceResult update_resource_result = 2;
+}
+
+message ResponseGetBookList {
+    message TUserQuestBook {
+        int32 quest_id = 1;
+        int32 book_type = 2;
+        int32 target_type = 3;
+        int32 target_id = 4;
+        int32 count = 5;
+    }
+    repeated TUserQuestBook _user_quest_book_list = 1;
+}
+
+message ResponseGetContinueCrystal {
+    int32 continue_crystal_amount = 1;
+}
+
+message ResponseGetUserList {
+    repeated Common.TUserQuest t_user_quest_list = 1;
+}
+
+message ResponseRetire {
+    Common.UpdateResourceResult update_resource_result = 1;   
+}
+
+message ResponseReturn {
+    message EnemyDrop {
+        int32 wave_id = 1;
+        int32 enemy_group_id = 2;
+        int32 enenmy_id = 3;
+        int32 position_id = 4;
+    }
+    message GimmickDrop {
+        int32 wave_id = 1;
+        int32 drop_num = 2;
+    }
+
+    int32 deck_no = 1;
+    repeated EnemyDrop enemy_drop_list = 3;
+    repeated GimmickDrop gimmick_drop_list = 4;
+    Common.UserProfile user_profile = 5;
+    repeated int32 item_id_list = 7;
+}
+
+message ResponseStart {
+    message EnemyDrop {
+        int32 wave_id = 1;
+        int32 enemy_group_id = 2;
+        int32 enenmy_id = 3;
+        int32 position_id = 4;
+    }
+    message GimmickDrop {
+        int32 wave_id = 1;
+        int32 drop_num = 2;
+    }
+
+    string token = 1;
+    repeated EnemyDrop enemy_drop_list = 2;
+    repeated GimmickDrop gimmick_drop_list = 3;
+    Common.TUserWorker t_user_worker = 4;
+}
+
+message ResponseStartAdv {
+    string token = 1;
+    Common.TUserWorker t_user_worker = 2;
+}

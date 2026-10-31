@@ -3,11 +3,10 @@ from proto import mypage_pb2 as pb
 from google.protobuf import json_format as jf
 from api import common as cm
 from datetime import datetime
+from zoneinfo import ZoneInfo
+from flask import current_app
 
 bp = Blueprint("mypage", __name__, url_prefix="/mypage")
-
-had_loginbonus = False
-last_date = None
 
 birthday = {
     (6, 29): [11001],(12, 14): [11002],
@@ -23,27 +22,24 @@ birthday = {
 
 @bp.route("/index", methods=["POST"])
 def mypage_index():
-    global had_loginbonus
-    global last_date
-    today = datetime.now()
-
-    if last_date != today.date():
-        had_loginbonus = False
-        last_date = today.date()
+    today = datetime.now(ZoneInfo(current_app.config['GAME_TIMEZONE']))
+    try: last_date = cm.document('login_day')['date']
+    except KeyError: last_date = None
+    had_loginbonus = last_date == today.date().isoformat()
 
     pbrs = pb.ResponseIndex()
     jf.Parse(cm.read("t_user"), pbrs)
     jf.Parse(cm.read("t_user_tips_list"), pbrs)
     jf.Parse(cm.read("t_user_crystal"), pbrs)
     jf.Parse(cm.read("t_user_count_list"), pbrs)
-    
+
     pbrs.m_app_banner_list.add()
     pbrs.m_app_banner_list[0].banner_img = "Banner/1.png"
     pbrs.m_app_banner_list[0].order = 0
     pbrs.m_app_banner_list[0].start_at = "2019-01-03 20:02:44"
     pbrs.m_app_banner_list[0].end_at = "2038-01-01 23:59:59"
     pbrs.m_app_banner_list[0].transition_id = 8
-    
+
     pbrs.m_app_banner_list.add()
     pbrs.m_app_banner_list[1].banner_img = "Banner/2.png"
     pbrs.m_app_banner_list[1].order = 0
@@ -59,7 +55,7 @@ def mypage_index():
     pbrs.m_app_banner_list[2].transition_id = 13
 
     if not had_loginbonus:
-        had_loginbonus = True
+        cm.save('login_day', {'date': today.date().isoformat()})
         day_key = (today.month, today.day)
 
         if day_key in birthday:

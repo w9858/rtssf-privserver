@@ -10,7 +10,6 @@ def weapon_equip():
     pbrq = pb.RequestEquip()
     pbrs = pb.ResponseEquip()
     pbrq.ParseFromString(request.data)
-    print("\n"+str(pbrq))
     cm.weapon_equip(pbrq.unit_id, pbrq.user_weapon_id)
     jf.Parse(cm.read("t_user_unit_weapon_list"), pbrs)
     if(pbrq.user_weapon_id == 0):
@@ -22,8 +21,19 @@ def weapon_equip():
 
 @bp.route("/lock", methods=["POST"])
 def weapon_lock():
-    return make_response('', 204)
+    pbrq = pb.RequestLock.FromString(request.data)
+    if pbrq.flag not in (0, 1):
+        from werkzeug.exceptions import BadRequest
+        raise BadRequest('Lock flag must be 0 or 1')
+    data = cm.document('t_user_weapon_list')
+    ids = {weapon.user_weapon_id for weapon in pbrq.weapon_list}
+    for value in ids: cm.owned('t_user_weapon_list', 'user_weapon_id', value)
+    for row in data['t_user_weapon_list']:
+        if row['user_weapon_id'] in ids: row['lock_flag'] = pbrq.flag
+    cm.save('t_user_weapon_list', data)
+    return jf.ParseDict(data, pb.ResponseLock()).SerializeToString()
 
 @bp.route("/sell", methods=["POST"])
 def weapon_sell():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')

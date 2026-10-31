@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Present;
+
+message RequestGetList {
+
+}
+
+message RequestGetReceivedList {
+
+}
+
+message RequestReceive {
+    int32 present_box_id = 1;
+}
+
+message RequestReceiveAll {
+    repeated int32 present_box_id_list = 1;
+}
+
+message ResponseGetList {
+    message TUserPresentBox {
+        int32 present_box_id = 1;
+        int32 user_id = 2;
+        int32 message_id = 3;
+        int32 resource_type = 4;
+        int32 resource_id = 5;
+        int32 resource_value_id = 6;
+        int32 amount = 7;
+        string limited_at = 8;
+        string created_at = 9;
+        string received_at = 10;
+        string message = 11;
+    }
+
+    repeated TUserPresentBox t_user_present_box_list = 1;
+}
+
+message ResponseGetReceivedList {
+    message TUserPresentBox {
+        int32 present_box_id = 1;
+        int32 user_id = 2;
+        int32 message_id = 3;
+        int32 resource_type = 4;
+        int32 resource_id = 5;
+        int32 resource_value_id = 6;
+        int32 amount = 7;
+        string limited_at = 8;
+        string created_at = 9;
+        string received_at = 10;
+        int32 is_resource_replace = 11;
+        string message = 12;
+    }
+
+    repeated TUserPresentBox t_user_present_box_list = 1;
+}
+
+message ResponseReceive {
+    Common.UpdateResourceResult update_resource_result = 10;
+}
+
+message ResponseReceiveAll {
+    repeated int32 present_box_id_list = 1;
+    Common.UpdateResourceResult update_resource_result = 11;
+}

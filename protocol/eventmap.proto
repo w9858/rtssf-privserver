@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Eventmap;
+
+message RequestGet {
+    int32 event_id = 1;
+}
+
+message RequestGetRanking {
+    int32 event_id = 1;
+}
+
+message RequestUseItem {
+    int32 event_id = 1;
+    int32 place_id = 2;
+    int32 item_id = 3;
+}
+
+message ResponseGet {
+    message TUserEventMapItemUsed {
+        int32 event_id = 1;
+        int32 place_id = 2;
+        int32 item_id = 3;
+        int32 amount = 4;
+    }
+
+    Common.TUserEvent t_user_event = 1;
+    repeated TUserEventMapItemUsed t_user_event_map_item_used_list = 2;
+    repeated Common.TUserQuest t_user_quest_list = 3;
+    bool is_first_access = 4;
+    bool exists_new_clear_event_achievement = 5;
+    int32 first_adv_quest_id = 6;
+    Common.TUserArchive t_user_archive = 7;
+    int32 current_rank = 8;
+}
+
+message ResponseGetRanking {
+    message EventRanking {
+        int32 point = 1;
+        int32 rank = 2;
+        int32 is_me = 3;
+        Common.UserProfile user_profile = 4;
+    }
+    message Border {
+        int32 point = 1;
+        int32 rank = 2;
+    }
+
+    repeated EventRanking event_ranking_border_list = 1;
+    repeated EventRanking event_ranking_top_list = 2;
+    repeated EventRanking event_ranking_current_list = 3;
+    int32 current_rank = 4;
+    int32 current_point = 5;
+}
+
+message ResponseUseItem {
+    message TUserEventMapItemUsed {
+        int32 event_id = 1;
+        int32 place_id = 2;
+        int32 item_id = 3;
+        int32 amount = 4;
+    }
+    
+    TUserEventMapItemUsed t_user_event_map_item_used = 1;
+    repeated Common.TUserItem t_user_item_list = 2;
+}

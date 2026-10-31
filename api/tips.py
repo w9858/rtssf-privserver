@@ -1,14 +1,17 @@
-from flask import Blueprint, request, make_response
-from proto import tips_pb2 as pb
+from flask import Blueprint, request
 from google.protobuf import json_format as jf
+from werkzeug.exceptions import BadRequest
+from proto import tips_pb2 as pb
 from api import common as cm
 
-bp = Blueprint("tips", __name__, url_prefix="/tips")
+bp = Blueprint('tips', __name__, url_prefix='/tips')
 
-@bp.route("/save", methods=["POST"])
-def tips_save():
-    pbrs = pb.ResponseSave()
-    pbrs.t_user_tips_list = [1001,1002,1003,1004,1005,1006,1007,1008,1009,
-                             1010,1011,1012,1013,1014,1015,1016,1017,1018,
-                             1019,1020,1021,1022,1023,1024,1025,1026,1027]
-    return make_response(pbrs.SerializeToString())
+@bp.post('/save')
+def save():
+    query = pb.RequestSave.FromString(request.data)
+    if any(value <= 0 for value in query.tips_id_list): raise BadRequest('Tips IDs must be positive')
+    data = cm.document('t_user_tips_list')
+    ids = {row['tips_id'] for row in data['t_user_tips_list']}
+    data['t_user_tips_list'].extend({'tips_id': value} for value in sorted(set(query.tips_id_list) - ids))
+    cm.save('t_user_tips_list', data)
+    return jf.ParseDict(data, pb.ResponseSave()).SerializeToString()

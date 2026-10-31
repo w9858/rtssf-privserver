@@ -3,6 +3,9 @@ from proto import gacha_pb2 as pb
 from google.protobuf import json_format as jf
 from api import common as cm
 import random
+import time
+from datetime import datetime, timezone
+from werkzeug.exceptions import BadRequest
 
 bp = Blueprint("gacha", __name__, url_prefix="/gacha")
 
@@ -75,7 +78,7 @@ def gacha_list():
     #     394004001,396001001,396002001,396003001,396004001,396005001,396006001] # all available features..
 
     #gacha_feature_chara_list = [311001001,311002001,311003001,311004001,311005001,311006001]
-    
+
     for i in gacha_feature_chara_list:
         pbrs.m_gacha_feature_list.add()
         pbrs.m_gacha_feature_list[-1].gacha_id = 3010001
@@ -102,6 +105,8 @@ def gacha_list():
     pbrs.m_gacha_normal_detail_list[-1].resource_value_id = 2
     pbrs.m_gacha_normal_detail_list[-1].amount = 0
     pbrs.m_gacha_normal_detail_list[-1].execution_limit = 0
+    try: jf.ParseDict(cm.document('gacha_state'), pbrs)
+    except KeyError: pass
     return make_response(pbrs.SerializeToString())
 
 @bp.route("/draw", methods=["POST"])
@@ -109,17 +114,18 @@ def gacha_draw():
     pbrq = pb.RequestDraw()
     pbrs = pb.ResponseDraw()
     pbrq.ParseFromString(request.data)
-    
+
     if pbrq.detail_id == 30100011: draw_count = 1
     elif pbrq.detail_id == 30100012: draw_count = 10
-    else: draw_count = 10
+    else: raise BadRequest('Unknown gacha detail')
+    if pbrq.gacha_id != 3010001: raise BadRequest('Unknown gacha')
 
     max_effect = 1
 
     for i in range(draw_count):
         rs = draw()
-        if rs[0] in ssr_chara: max_effect = 3
-        elif rs[0] in sr_chara: max_effect = 2
+        if rs[0] in ssr_chara: max_effect = max(max_effect, 3)
+        elif rs[0] in sr_chara: max_effect = max(max_effect, 2)
         pbrs.draw_result_list.add()
         pbrs.draw_result_list[i].resource_type = 3
         pbrs.draw_result_list[i].resource_id = rs[0]
@@ -136,14 +142,32 @@ def gacha_draw():
     # pbrs.omake_list[0].resource_value_id = 1
     # pbrs.omake_list[0].amount = 1000
 
-    pbrs.t_user_gacha_normal.gacha_id = 3010001
-    pbrs.t_user_gacha_normal.updated_at = "2022-04-20 00:55:54"
-    pbrs.t_user_gacha_normal.execution_count = 1
-
-    pbrs.t_user_gacha_normal_detail.gacha_id = 3010001
-    pbrs.t_user_gacha_normal_detail.gacha_detail_id = 30100011
-    pbrs.t_user_gacha_normal_detail.updated_at = "2022-04-20 00:55:54"
-    pbrs.t_user_gacha_normal_detail.execution_count = 1
+    try: state = cm.document('gacha_state')
+    except KeyError: state = {'t_user_gacha_normal_list': [], 't_user_gacha_normal_detail_list': []}
+    stamp = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+    for key, detail, output in (
+        ('t_user_gacha_normal_list', None, pbrs.t_user_gacha_normal),
+        ('t_user_gacha_normal_detail_list', pbrq.detail_id, pbrs.t_user_gacha_normal_detail),
+    ):
+        row = next((row for row in state[key] if detail is None or row['gacha_detail_id'] == detail), None)
+        if row is None:
+            row = {'gacha_id': 3010001, 'execution_count': 0}
+            if detail is not None: row['gacha_detail_id'] = detail
+            state[key].append(row)
+        row.update(execution_count=row['execution_count'] + 1, updated_at=stamp)
+        jf.ParseDict(row, output)
+    cm.save('gacha_state', state)
+    units = cm.document('t_user_unit_list')
+    owned = {row['unit_id'] for row in units['t_user_unit_list']}
+    for reward in pbrs.draw_result_list:
+        if reward.resource_id in owned:
+            pbrs.update_resource_result.replaced_unit_id_list.append(reward.resource_id)
+        else:
+            rarity = 4 if reward.resource_id in ssr_chara else 3 if reward.resource_id in sr_chara else 2
+            units['t_user_unit_list'].append(dict(user_id=1, unit_id=reward.resource_id, rarity=rarity,
+                                                lv=1, max_lv=100, exp=0, obtained_time=int(time.time()), avatar_rarity=1))
+            owned.add(reward.resource_id)
+    cm.save('t_user_unit_list', units)
 
     pbrs.update_resource_result.MergeFrom(cm.update_resource_result())
     return make_response(pbrs.SerializeToString())

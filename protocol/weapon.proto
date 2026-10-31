@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Weapon;
+
+message RequestEquip {
+    int32 unit_id = 1;
+    int32 user_weapon_id = 2;
+}
+
+message RequestLock {
+    message Weapon{
+        int32 user_weapon_id = 1;
+    }
+
+    repeated Weapon weapon_list = 1;
+    int32 flag = 2; // 1 meant LOCK , 0 meant UNLOCK
+}
+
+message RequestSell {
+    message Weapon {
+        int32 user_weapon_id = 1;
+    }
+    repeated Weapon weapon_list = 1;
+}
+
+message ResponseEquip {
+    message Deleted {
+        int32 user_id = 1;
+        int32 unit_id = 2;
+        int32 user_weapon_id = 3;
+    }
+
+    repeated Common.TUserUnitWeapon t_user_unit_weapon_list = 1;
+    repeated Deleted deleted_list = 2;
+}
+
+message ResponseLock {
+    repeated Common.TUserWeapon t_user_weapon_list = 1;
+}
+
+message ResponseSell {
+    Common.TUser t_user = 1;
+    repeated Common.TUserWeapon t_user_weapon_list = 2;
+    repeated Common.TUserWeaponSkill t_user_weapon_skill_list = 3;
+    repeated Common.TUserWeaponStatus t_user_weapon_status_list = 4;
+}

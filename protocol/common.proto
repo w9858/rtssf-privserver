@@ -1,0 +1,309 @@
+syntax = "proto3";
+
+package Spy.Common;
+
+message Resource {
+    int32 resource_type = 1;
+    // Item = 1, Weapon = 2, Unit = 3, Gold = 4, Stamina = 5, Crystal = 6, Recipe = 7, UserExp = 8
+    // FriendPoint = 9, EventPoint = 10, HomeBackground = 11, Emblem = 12, ShopPackIcon = 101
+    int32 resource_id = 2;
+    int32 resource_value_id = 3;
+    int32 amount = 4;
+}
+
+message SquareStatus {
+    int32 square_id = 1;
+    bool is_release = 2;
+}
+
+message TUser {
+    int32 user_id = 1;
+    int32 gold = 2;
+    int32 exp = 3;
+    int32 friend_point = 4;
+    string last_login = 5;
+    string name = 6;
+    int32 home_unit_id_1 = 7;
+    int32 home_unit_id_2 = 8;
+    int32 tutorial_status = 9; //none = 0, user_entry = 1, adv1 = 10, quest1 = 20, gacha = 30, end = 99
+    int32 push_flag = 10;
+    int32 ban_flag = 11;
+    int32 create_store_type = 12;
+    string acount_relation_id = 13;
+    int32 friend_unit_id = 15;
+    int32 home_background_id = 16;
+    string comment = 17;
+    string tutorial_end_at = 18;
+    int32 view_user_id = 19;
+    int32 emblem_id = 20;
+}
+
+message TUserAchievement {
+    int32 achievement_id = 1;
+    int32 clear_flag = 2;
+    int32 receive_flag = 3;
+    string updated_at = 4;
+    int32 base_count = 5;
+    int32 transition_value = 6;
+}
+
+message TUserAchievementDaily {
+    int32 achievement_id = 1;
+    int32 clear_flag = 2;
+    int32 receive_flag = 3;
+    string updated_at = 4;
+    int32 base_count = 5;
+    int32 transition_value = 6;
+}
+
+message TUserAchievementWeekly {
+    int32 achievement_id = 1;
+    int32 clear_flag = 2;
+    int32 receive_flag = 3;
+    string updated_at = 4;
+    int32 base_count = 5;
+    int32 transition_value = 6;
+}
+
+message TUserArchive {
+    int32 quest_id = 1;
+    int32 read_flag = 2;
+}
+
+message TUserBackground {
+    int32 background_id = 1;
+    int32 obtained_time = 2;
+}
+
+message TUserBoard {
+    int32 unit_id = 1;
+    int32 progress_1 = 2;
+    int32 progress_2 = 3;
+    int32 sheet_no = 4;
+    repeated SquareStatus square_status_list = 5;
+}
+
+message TUserCharacterFriendly {
+    int32 friendly_id = 1;
+    int32 lv = 2;
+    int32 max_lv = 3;
+    int32 exp = 4;
+}
+
+message TUserCount {
+    int32 count_type = 1;
+    int32 target_id = 2;
+    int32 count = 3;
+}
+
+message TUserCrystal {
+    int32 amount = 1; // 1=2+3
+    int32 amount_free = 2;
+    int32 amount_payment = 3;
+}
+
+message TUserDeck {
+    int32 deck_no = 1; // 1~10 (1~5 for old client maybe)
+    int32 unit_id_1 = 2;
+    int32 sub_unit_id_1 = 4;
+    int32 unit_id_2 = 5;
+    int32 sub_unit_id_2 = 7;
+    int32 unit_id_3 = 8;
+    int32 sub_unit_id_3 = 10;
+    string name = 11;
+}
+
+message TUserEmblem {
+    int32 emblem_id = 1;
+    int32 obtained_time = 2;
+}
+
+message TUserEvent {
+    int32 event_id = 1;
+    int32 point = 2;
+    int32 max_point = 3;
+}
+
+message TUserGachaNormal {
+    int32 gacha_id = 1;
+    // [REMOVED] int32 draw_count = 2;
+    string updated_at = 3;
+    int32 execution_count = 4;
+}
+
+message TUserGachaNormalDetail {
+    int32 gacha_id = 1;
+    int32 gacha_detail_id = 2;
+    // [REMOVED] int32 draw_count = 3;
+    string updated_at = 4;
+    int32 execution_count = 5;
+}
+
+message TUserGachaStepup {
+    int32 gacha_id = 1;
+    int32 step = 3;
+    int32 step_count = 4;
+    int32 loop_count = 5;
+    string updated_at = 6;
+    int32 execution_count = 7;
+}
+
+message TUserItem {
+    int32 user_id = 1;
+    int32 item_id = 2;
+    int32 amount = 3;
+}
+
+message TUserQuest {
+    int32 quest_id = 1;
+    int32 clear_count = 2;
+    int32 quest_mission_id_1 = 3;
+    int32 quest_mission_id_2 = 4;
+    int32 quest_mission_id_3 = 5;
+    int32 rank = 6; // None = 0, D = 1, C = 2, B = 3, A = 4, S = 5 but this is useless.. maybe
+}
+
+message TUserQuestStatus{
+    int32 quest_id = 1;
+    string token = 4; // token might be made at Spy.Quest.ResponseStart
+    string start_at = 5;
+    string end_at = 6; // if playing quest, this is ""
+}
+
+message TUserRecipe {
+    int32 user_id = 1;
+    int32 recipe_id = 2;
+    int32 obtained_time = 3;
+}
+
+message TUserSpy {
+    int32 user_spy_id = 1;
+    int32 spy_id = 2;
+    int32 unit_id = 3;
+    int32 sub_unit_id = 4;
+    int32 state = 5; // idle=0 receiving=1 received=2 trashed=3
+    int32 start_time = 6;
+    int32 is_force_clear = 7;
+    int32 subscription_flag = 8;
+}
+
+message TUserSpyPlaying {
+    int32 idx = 1;
+    int32 user_spy_id = 2;
+    int32 is_lock = 3;
+}
+
+message TUserSubscription {
+    int32 id = 1;
+    int32 user_id = 2;
+    int32 subscription_id = 3;
+    string login_at = 4;
+    string expiration_at = 5;
+}
+
+message TUserTips {
+    int32 tips_id = 1;
+}
+
+message TUserTutorialHowToPlay {
+    int32 tutorial_type = 1;
+    // UnitLvupSelectMaterialPage = 9901, BoardPage = 9902, DeckOrganaizePage = 9903, FriendshipPage = 9904, ScenarioArchivePage = 9905
+    // AtelierTopPage = 9906, ExpeditionTopPage = 9907, MainQuestChapterSelectPage = 9908, EventQuestEventSelectPage = 9909, CharacterQuestCharacterSelectPage = 9910
+    // SubQuestStorySelectPage = 9911, DeckSelectForQuestPage = 9912, QuestBattleItemSettingPage = 9913, QuestBoostItemSettingPage = 9914, FriendSelectPage = 9915
+}
+
+message TUserUnit {
+    int32 user_id = 1;
+    int32 unit_id = 2;
+    int32 rarity = 3;
+    // rarity:
+    // lv limit break available to 60lv = 1 // to 70lv = 2 // to 80lv = 3
+    // to 90lv = 4// to 100lv = 5 // no more upgradable = 6
+    int32 lv = 4;
+    int32 max_lv = 5;
+    int32 exp = 6;
+    int32 obtained_time = 7;
+    int32 avatar_rarity = 8;
+}
+
+message TUserUnitWeapon {
+    int32 user_id = 1;
+    int32 unit_id = 2;
+    int32 user_weapon_id = 3;
+}
+
+message TUserWeapon {
+    int32 user_weapon_id = 1;
+    int32 user_id = 2;
+    int32 weapon_id = 3;
+    int32 lock_flag = 4;
+    int32 obtained_time = 5;
+}
+
+message TUserWeaponSkill {
+    int32 user_weapon_id = 1;
+    int32 skill_id = 2;
+    int32 user_id = 3;
+    int32 id = 5;
+    int32 skill_value_1 = 6;
+    int32 skill_value_2 = 7;
+    int32 skill_value_3 = 8;
+    int32 disp_skill_id = 9;
+}
+
+message TUserWeaponStatus {
+    int32 id = 1;
+    int32 user_weapon_id = 2;
+    int32 user_id = 3;
+    int32 disp_skill_id = 4;
+    int32 status_type_1 = 5;
+    int32 status_value_1 = 6;
+    int32 status_type_2 = 7;
+    int32 status_value_2 = 8;
+    int32 status_type_3 = 9;
+    int32 status_value_3 = 10;
+}
+
+message TUserWorker {
+    int32 worker_type = 1; // workertype only has stamina. use 1.
+    int32 max_worker = 2;
+    int32 add_worker = 3;
+    int32 recover_end_time = 4;
+}
+
+message UpdateResourceResult {
+    repeated TUserItem t_user_item_list = 1;
+    repeated TUserWeapon t_user_weapon_list = 2;
+    repeated TUserWeaponSkill t_user_weapon_skill_list = 3;
+    repeated TUserUnit t_user_unit_list = 4;
+    TUser t_user = 6;
+    repeated TUserCount t_user_count_list = 7;
+    TUserCrystal t_user_crystal = 8;
+    repeated TUserEvent t_user_event_list = 9;
+    repeated TUserRecipe t_user_recipe_list = 10;
+    TUserWorker t_user_worker = 11;
+    repeated TUserWeaponStatus t_user_weapon_status_list = 12;
+    repeated int32 replaced_unit_id_list = 13;
+    repeated int32 replaced_recipe_id_list = 14;
+    repeated TUserBackground t_user_background_list = 15;
+    repeated TUserEmblem t_user_emblem_list = 16;
+    repeated int32 replaced_background_id_list = 17;
+}
+
+message UserProfile {
+    int32 user_id = 1;
+    string name = 2;
+    string comment = 3;
+    int32 lv = 4;
+    string last_login = 5;
+    int32 friend_point = 6;
+    int32 friend_unit_id = 7;
+    int32 home_unit_id_1 = 8;
+    int32 friend_unit_rarity = 9;
+    int32 home_background_id = 10;
+    bool is_invite = 11;
+    bool is_invited = 12;
+    bool is_friend = 13;
+    int32 view_user_id = 14;
+    int32 emblem_id = 15;
+}

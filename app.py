@@ -1,33 +1,9 @@
-from flask import Flask, g, send_from_directory
-import time
-from api import api
+"""Compatibility entry point: python app.py or gunicorn 'server:create_app()'."""
+import os
+from server import create_app
 
-app = Flask("Spyce")
+app = create_app()
 
-app.register_blueprint(api)
-
-@app.after_request
-def add_headers(response):
-    if getattr(g, 'is_api', False):
-        response.headers['Content-Type'] = 'application/x-protobuf'
-        response.headers['X_SQLITE_VER'] = '99'
-        response.headers['X_RES_STATUS'] = '0'
-        response.headers['X_TIMESTAMP'] = str(int(time.time()))
-        # response.headers['X_ERROR_MSG'] = ''
-    return response
-
-# Static files
-@app.route('/assets/<path:filename>')
-def serve_assets(filename):
-    return send_from_directory('./img/assets', filename)
-
-@app.route('/sqlites/<path:filename>')
-def serve_sqlites(filename):
-    return send_from_directory('./img/sqlites', filename)
-
-@app.route('/images/<path:filename>')
-def serve_images(filename):
-    return send_from_directory('./img/images', filename)
-
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=19212, debug=False)
+if __name__ == '__main__':
+    app.run(host=os.environ.get('RTSSF_HOST', '127.0.0.1'),
+            port=int(os.environ.get('RTSSF_PORT', '19212')), debug=False)

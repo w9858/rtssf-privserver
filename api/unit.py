@@ -7,8 +7,10 @@ bp = Blueprint("unit", __name__, url_prefix="/unit")
 
 @bp.route("/evolve", methods=["POST"])
 def unit_evolve():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')
 
 @bp.route("/level_up", methods=["POST"])
 def unit_level_up():
-    return make_response('', 204)
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')

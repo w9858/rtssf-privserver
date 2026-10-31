@@ -12,5 +12,5 @@ def recipe_create():
     # pbrq.ParseFromString(request.body)
     # pbrs.update_resource_result.MergeFrom(cm.update_resource_result())
     # return make_response(pbrs.SerializeToString())
-    return make_response('', 204)
-
+    from werkzeug.exceptions import NotImplemented
+    raise NotImplemented('This operation requires unavailable game master data or account services')

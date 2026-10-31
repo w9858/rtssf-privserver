@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Deck;
+
+message RequestChangeName {
+    int32 deck_no = 1;
+    string name = 2;
+}
+
+message RequestSave {
+    Common.TUserDeck t_user_deck = 1;
+}
+
+message ResponseChangeName {
+    Common.TUserDeck t_user_deck = 1;
+}
+
+message ResponseSave {
+    Common.TUserDeck t_user_deck = 1;
+}

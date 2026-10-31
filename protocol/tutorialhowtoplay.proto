@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Tutorialhowtoplay;
+
+message RequestSave {
+    int32 tutorial_type = 1;
+}
+
+message ResponseSave {
+    repeated Common.TUserTutorialHowToPlay t_user_tutorial_how_to_play_list = 1;
+}

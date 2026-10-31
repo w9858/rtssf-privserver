@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package Spy.Load;
+
+import "common.proto";
+
+message RequestSplit {
+    int32 section = 1;
+}
+
+message RequestSqliteVersions {
+
+}
+
+message ResponseSplit {
+    message TUserQuestStatus { // Unused MSG in game
+        int32 quest_id = 1;
+        string token = 4;
+        string start_date = 5;
+        string end_date = 6;
+    }
+
+    int32 current_section = 1;
+    int32 max_section = 2;
+    Common.TUser t_user = 3;
+    Common.TUserQuestStatus t_user_quest_status = 4;
+    Common.TUserCrystal t_user_crystal = 5;
+    repeated Common.TUserUnit t_user_unit_list = 6;
+    repeated Common.TUserUnitWeapon t_user_unit_weapon_list = 8;
+    repeated Common.TUserWorker t_user_worker_list = 9;
+    repeated Common.TUserItem t_user_item_list = 10;
+    repeated Common.TUserDeck t_user_deck_list = 11;
+    repeated Common.TUserCount t_user_count_list = 12; // UserCountList.CountType
+    repeated Common.TUserWeapon t_user_weapon_list = 13;
+    repeated Common.TUserWeaponSkill t_user_weapon_skill_list = 14;
+    repeated Common.TUserRecipe t_user_recipe_list = 15;
+    repeated Common.TUserQuest t_user_quest_list = 16;
+    repeated Common.TUserBoard t_user_board_list = 17;
+    repeated Common.TUserCharacterFriendly t_user_character_friendly_list = 18;
+    repeated Common.TUserWeaponStatus t_user_weapon_status_list = 19;
+    repeated Common.TUserSpy t_user_spy_list = 20;
+    repeated Common.TUserSpyPlaying t_user_spy_playing_list = 21;
+    repeated Common.TUserBackground t_user_background_list = 22;
+    repeated Common.TUserArchive t_user_archive_list = 23;
+    repeated Common.TUserTips t_user_tips_list = 24;
+    repeated Common.TUserSubscription t_user_subscription_list = 25;
+    repeated Common.TUserTutorialHowToPlay t_user_tutorial_how_to_play_list = 26;
+    repeated Common.TUserEmblem t_user_emblem_list = 27;
+}
+
+message ResponseSqliteVersions {
+    repeated string version_list = 1;
+}

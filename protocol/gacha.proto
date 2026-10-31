@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package Spy.Gacha;
+
+message RequestDraw {
+    int32 gacha_id = 1;
+    int32 detail_id = 2;
+    int32 step = 3;
+    bool is_exchange_crystal = 4;
+}
+
+message RequestList {
+    
+}
+
+message RequestRateList {
+    int32 gacha_id = 1;
+}
+
+message ResponseDraw {
+    repeated Common.Resource draw_result_list = 1;
+    repeated Common.Resource omake_list = 2;
+    Common.TUserGachaStepup t_user_gacha_stepup = 3;
+    Common.TUserGachaNormal t_user_gacha_normal = 4;
+    Common.TUserGachaNormalDetail t_user_gacha_normal_detail = 5;
+    Common.UpdateResourceResult update_resource_result = 6;
+    int32 effect_1 = 7;
+    int32 effect_2 = 8;
+    repeated int32 effect_3_list = 9;    
+}
+
+message ResponseList {
+    message MGacha {
+        int32 gacha_id = 1;
+        int32 gacha_type = 2;
+        int32 order = 3;
+        string name = 6;
+        string header = 7;
+        string description = 8;
+        int32 background_id = 9;
+        int32 end_of_tutorial_from = 10;
+        int32 disp_term_flag = 11;
+        string start_at = 12;
+        string end_at = 13;
+    }
+    message MGachaFeature {
+        int32 gacha_id = 1;
+        int32 unit_id = 2;
+        int32 order = 3;
+    }
+    message MGachaNormalDetail {
+        int32 gacha_id = 1;
+        int32 detail_id = 2;
+        int32 one_day_flag = 3;
+        int32 draw_count = 4;
+        int32 resource_type = 5;
+        int32 resource_id = 6;
+        int32 resource_value_id = 7;
+        int32 amount = 8;
+        int32 execution_limit = 9;
+    }
+    message MGachaNormalOmake {
+        int32 gacha_id = 1;
+        int32 resource_type = 2;
+        int32 resource_id = 3;
+        int32 resource_value_id = 4;
+        int32 amount = 5;
+        int32 detail_id = 6;
+    }
+    message MGachaStepup {
+        int32 gacha_id = 1;
+        int32 max_loop = 2;
+    }
+    message MGachaStepupDetail {
+        int32 gacha_id = 1;
+        int32 step = 2;
+        // [REMOVED] int32 draw_rare_id = 3; int32 draw_box_id = 4;
+        int32 draw_count = 5;
+        int32 resource_type = 6;
+        int32 resource_id = 7;
+        int32 resource_value_id = 8;
+        int32 amount = 9;
+        int32 next_step_count = 10;
+    }
+    message MGachaStepupOmake {
+        int32 gacha_id = 1;
+        int32 step = 2;
+        int32 resource_type = 3;
+        int32 resource_id = 4;
+        int32 resource_value_id = 5;
+        int32 amount = 6;
+    }
+
+    repeated MGacha m_gacha_list = 1;
+    // [REMOVED] repeated MGachaNormal m_gacha_normal_list = 2;
+    repeated MGachaNormalDetail m_gacha_normal_detail_list = 3;
+    repeated MGachaNormalOmake m_gacha_normal_omake_list = 4;
+    repeated MGachaStepup m_gacha_stepup_list = 5;
+    repeated MGachaStepupDetail m_gacha_stepup_detail_list = 6;
+    repeated MGachaStepupOmake m_gacha_stepup_omake_list = 7;
+    repeated Common.TUserGachaNormal t_user_gacha_normal_list = 8;
+    repeated Common.TUserGachaStepup t_user_gacha_stepup_list = 9;
+    repeated MGachaFeature m_gacha_feature_list = 10;
+    repeated Common.TUserGachaNormalDetail t_user_gacha_normal_detail_list = 11;
+}
+
+message ResponseRateList {
+    message FixedDraw {
+        int32 detail_id = 1;
+        int32 fixed_draw_count = 2;
+        repeated RareRate rare_rate_list = 3;
+    }
+    message NormalGacha {
+        repeated RareRate rare_rate_list = 1;
+        repeated FixedDraw fixed_draw_list = 2;
+    }
+    message RareRate {
+        int32 rare = 1;
+        string rate = 2;
+        repeated ResourceRate resource_rate_list =3;
+    }
+    message ResourceRate {
+        int32 resource_type = 1;
+        int32 resource_id = 2;
+        int32 resource_value_id = 3;
+        int32 amount = 4;
+        string rate = 5;
+    }
+    message StepupGacha {
+        int32 step = 1;
+        repeated RareRate rare_rate_list = 2;
+        repeated FixedDraw fixed_draw_list = 3;
+    }
+
+    NormalGacha normal_gacha = 1;
+    repeated StepupGacha stepup_gacha_list = 2;
+}
